@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("white");
+//scene.background = new THREE.Color("white");
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -28,18 +28,21 @@ function initLights() {
  */
 const textureLoader = new THREE.TextureLoader();
 const karleTexture = textureLoader.load("src/karle.jpg");
+const height = textureLoader.load("src/height.jpg");
+const backCard = textureLoader.load("src/back-card.jpg");
 
 /**
  * Objects
  */
 const cardMaterial = new THREE.MeshStandardMaterial();
 cardMaterial.map = karleTexture;
-const planeGeometry = new THREE.PlaneGeometry(1, 1.39, 128, 128);
+cardMaterial.displacementMap = height;
+const planeGeometry = new THREE.PlaneGeometry(1, 1.39, 156, 156);
 const cardFrontMesh = new THREE.Mesh(planeGeometry, cardMaterial);
 
 const cardBackMesh = new THREE.Mesh(
   planeGeometry,
-  new THREE.MeshBasicMaterial({ color: 0x000000 })
+  new THREE.MeshStandardMaterial({ map: backCard })
 );
 
 cardBackMesh.rotation.y = Math.PI;
